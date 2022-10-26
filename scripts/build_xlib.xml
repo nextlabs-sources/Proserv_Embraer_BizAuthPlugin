@@ -1,0 +1,125 @@
+<!-- build_xlib.xml
+
+Description:
+	This ANT script constructs <project root>/xlib.
+
+	To use this script, you must update properties is <project root>/scripts/build.properties or overide 
+	them from commandline (using -D option). For example:
+		
+		set PATH=C:\depot\external\apache-ant\apache-ant-1.8.4\bin;%PATH%
+		ant -XX:MaxPermSize=512m -Dnlbuildroot=C:/depot/PolicyStudio/dev/BuildScript_1205 -Dexternal.dir=c:/depot/external -Dnlexternaldir=c:/depot/external -f scripts/build_xlib.xml
+		
+	or
+		
+		set PATH=C:\depot\external\apache-ant\apache-ant-1.8.4\bin;%PATH%
+		set ANT_OPTS=-XX:MaxPermSize=512m -Dnlbuildroot=%NLBUILDROOT% -Dexternal.dir=%NLEXTERNALDIR% -Dnlexternaldir=%NLEXTERNALDIR% 
+		ant -f scripts/build_xlib.xml -v	
+-->
+
+<project name="build_xlib" default="all" basedir=".">
+
+	<!-- Debug 
+	<echoproperties />
+	<fail message="INFO: Debug" />
+	-->
+
+	<!-- Property files -->
+	<property file="${basedir}/build.properties" />
+
+	<!-- Global properties -->
+	<property name="xlib_dir" location="${nlbuildroot}/xlib" />
+	<property name="xlib_jar_dir" value="${xlib_dir}/jar" />
+	<property name="lib_dir" location="${nlbuildroot}/lib" />
+	<property name="lib_jar_dir" value="${lib_dir}/jar" />
+
+	<!-- TBD: psexternaldir is a temporary variable. It will be removed with all files 
+		under lib are extracted automatically from build artifacts. -->
+	<property name="psexternaldir" location="${nlbuildroot}/lib" />
+
+	<!-- Dump properties -->
+	<echoproperties />
+
+	<echo message="INFO: Dump properties completed" />
+
+	<!-- Sanity checks -->
+	<fail message="nlbuildroot is not set" unless="nlbuildroot" />
+	<fail message="nlbuildroot is empty">
+		<condition>
+			<equals arg1="${nlbuildroot}" arg2="" trim="true" />
+		</condition>
+	</fail>
+	<available file="${nlbuildroot}" type="dir" property="local.nlbuildroot_exists" />
+	<fail message="nlbuildroot directory does not exist - ${nlbuildroot}" unless="local.nlbuildroot_exists" />
+
+	<fail message="nlexternaldir is not set" unless="nlexternaldir" />
+	<fail message="nlexternaldir is empty">
+		<condition>
+			<equals arg1="${nlexternaldir}" arg2="" trim="true" />
+		</condition>
+	</fail>
+	<available file="${nlexternaldir}" type="dir" property="local.nlexternaldir_exists" />
+	<fail message="nlexternaldir directory does not exist - ${nlexternaldir}" unless="local.nlexternaldir_exists" />
+
+	<fail message="xlib_policy_adaptor_sdk_zip_file is not set" unless="xlib_policy_adaptor_sdk_zip_file" />
+	<fail message="xlib_policy_adaptor_sdk_zip_file is empty">
+		<condition>
+			<equals arg1="${xlib_policy_adaptor_sdk_zip_file}" arg2="" trim="true" />
+		</condition>
+	</fail>
+	<available file="${xlib_policy_adaptor_sdk_zip_file}" type="file" property="local.sdk_zip_file_exists" />
+	<fail message="xlib_policy_adaptor_sdk_zip_file directory does not exist - ${xlib_policy_adaptor_sdk_zip_file}" unless="local.sdk_zip_file_exists" />
+
+	<echo message="INFO: Sanity check completed (no error)" />
+
+	<!-- Targets -->
+	<target name="all" depends="clean, prepare_external_jar, prepare_destiny_jar" />
+
+	<target name="prepare_external_jar">
+		<mkdir dir="${xlib_jar_dir}" />
+		<copy file="${nlexternaldir2}/commons-dbcp2-2.1.1/commons-dbcp2-2.1.1.jar" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir2}/commons-logging/commons-logging-1.1.1/commons-logging-1.1.1.jar" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir2}/commons-pool2-2.4.2/commons-pool2-2.4.2.jar" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir2}/hsql/hsqldb-2.3.4/hsqldb.jar" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" verbose="true" />
+		<copy file="${nlexternaldir2}/oracle/jdbc11g/ojdbc6.jar" todir="${xlib_jar_dir}" preservelastmodified="true" overwrite="false" verbose="true" />
+	</target>
+
+	<target name="prepare_destiny_jar">
+		<mkdir dir="${xlib_jar_dir}" />
+		<unzip src="${xlib_destiny_build_artifacts_zip_file}" dest="${lib_jar_dir}" overwrite="yes">
+			<patternset>
+				<include name="agent/lib/agent-common.jar"/>
+				<include name="agent/lib/agent-controlmanager.jar"/>
+				<include name="agent/lib/agent-ipc.jar"/>
+				<include name="agent/lib/client-pf.jar"/>
+				<include name="agent/lib/common-domain-types.jar"/>
+				<include name="agent/lib/common-domain.jar"/>
+				<include name="agent/lib/common-framework-types.jar"/>
+				<include name="agent/lib/common-framework.jar"/>
+				<include name="agent/lib/common-pf.jar"/>
+				<include name="agent/lib/common-version-impl.jar"/>
+				<include name="agent/lib/common-version.jar"/>
+				<include name="agent/lib/crypt.jar"/>
+				<include name="agent/lib/policy-types.jar"/>
+				<include name="agent/lib/server-shared-types.jar"/>
+				<include name="agent/lib/version-types.jar"/>
+				<include name="agent/lib/version.jar"/>
+				<include name="app-framework.jar"/>
+				<include name="batchdeployer.jar"/>
+				<include name="client-security-config.jar"/>
+				<include name="common-res.jar"/>
+				<include name="logremover.jar"/>
+				<include name="policy-services.jar"/>
+				<include name="server-framework.jar"/>
+				<include name="server-shared-services.jar"/>
+			</patternset>
+			<mapper type="flatten" />
+		</unzip>
+
+	</target>
+
+	<target name="clean">
+		<delete dir="${xlib_dir}" />
+		<delete dir="${lib_dir}" />
+	</target>
+</project>
+

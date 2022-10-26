@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="xlib/jar/commons-dbcp2-2.1.1.jar"/>
+	<classpathentry kind="lib" path="xlib/jar/commons-logging.jar"/>
+	<classpathentry kind="lib" path="xlib/jar/commons-pool2-2.4.2.jar"/>
+	<classpathentry kind="lib" path="xlib/jar/hsqldb.jar"/>
+	<classpathentry kind="lib" path="xlib/jar/ojdbc6.jar"/>
+	<classpathentry kind="lib" path="lib/jar/agent-common.jar"/>
+	<classpathentry kind="lib" path="lib/jar/agent-controlmanager.jar"/>
+	<classpathentry kind="lib" path="lib/jar/agent-ipc.jar"/>
+	<classpathentry kind="lib" path="lib/jar/ant-contrib.jar"/>
+	<classpathentry kind="lib" path="lib/jar/app-framework.jar"/>
+	<classpathentry kind="lib" path="lib/jar/batchdeployer.jar"/>
+	<classpathentry kind="lib" path="lib/jar/client-pf.jar"/>
+	<classpathentry kind="lib" path="lib/jar/client-security-config.jar"/>
+	<classpathentry kind="lib" path="lib/jar/common-domain-types.jar"/>
+	<classpathentry kind="lib" path="lib/jar/common-domain.jar"/>
+	<classpathentry kind="lib" path="lib/jar/common-framework-types.jar"/>
+	<classpathentry kind="lib" path="lib/jar/common-framework.jar"/>
+	<classpathentry kind="lib" path="lib/jar/common-pf.jar"/>
+	<classpathentry kind="lib" path="lib/jar/common-res.jar"/>
+	<classpathentry kind="lib" path="lib/jar/common-version-impl.jar"/>
+	<classpathentry kind="lib" path="lib/jar/common-version.jar"/>
+	<classpathentry kind="lib" path="lib/jar/crypt.jar"/>
+	<classpathentry kind="lib" path="lib/jar/logremover.jar"/>
+	<classpathentry kind="lib" path="lib/jar/policy-services.jar"/>
+	<classpathentry kind="lib" path="lib/jar/policy-types.jar"/>
+	<classpathentry kind="lib" path="lib/jar/server-shared-services.jar"/>
+	<classpathentry kind="lib" path="lib/jar/server-shared-types.jar"/>
+	<classpathentry kind="lib" path="lib/jar/version-types.jar"/>
+	<classpathentry kind="lib" path="lib/jar/version.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
